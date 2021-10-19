@@ -1,0 +1,294 @@
+[gd_scene load_steps=22 format=2]
+
+[ext_resource path="res://scripts/trail.gd" type="Script" id=1]
+[ext_resource path="res://assets/wall.png" type="Texture" id=2]
+[ext_resource path="res://assets/player.png" type="Texture" id=3]
+[ext_resource path="res://assets/ball.png" type="Texture" id=4]
+[ext_resource path="res://scripts/main.gd" type="Script" id=5]
+[ext_resource path="res://assets/sound-fx/ball_bounce.wav" type="AudioStream" id=6]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 5.01224, 300.26 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 360, 8 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 60.0814, 10 )
+
+[sub_resource type="CircleShape2D" id=4]
+radius = 16.0
+
+[sub_resource type="Gradient" id=5]
+colors = PoolColorArray( 0.12549, 1, 0, 0, 0.12549, 1, 0, 1 )
+
+[sub_resource type="DynamicFontData" id=7]
+font_path = "res://assets/fonts/Bubblegum.ttf"
+
+[sub_resource type="DynamicFont" id=8]
+size = 144
+font_data = SubResource( 7 )
+
+[sub_resource type="DynamicFontData" id=9]
+font_path = "res://assets/fonts/Bubblegum.ttf"
+
+[sub_resource type="DynamicFont" id=10]
+size = 72
+font_data = SubResource( 9 )
+
+[sub_resource type="DynamicFontData" id=11]
+font_path = "res://assets/fonts/Bubblegum.ttf"
+
+[sub_resource type="DynamicFont" id=12]
+size = 30
+font_data = SubResource( 11 )
+
+[sub_resource type="DynamicFontData" id=13]
+font_path = "res://assets/fonts/Bubblegum.ttf"
+
+[sub_resource type="DynamicFont" id=14]
+size = 30
+font_data = SubResource( 13 )
+
+[sub_resource type="Environment" id=6]
+background_mode = 4
+glow_enabled = true
+glow_bloom = 0.1
+glow_blend_mode = 0
+glow_bicubic_upscale = true
+
+[sub_resource type="Animation" id=15]
+resource_name = "screen_dim"
+tracks/0/type = "value"
+tracks/0/path = NodePath("UI/screen_dim:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4, 0.6, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 0 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "pause_game"
+}, {
+"args": [  ],
+"method": "unpause_game"
+} ]
+}
+
+[node name="Main" type="Node2D"]
+script = ExtResource( 5 )
+
+[node name="Level" type="Node2D" parent="."]
+
+[node name="Wall" type="StaticBody2D" parent="Level"]
+position = Vector2( 5.13358, 300.26 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Level/Wall"]
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Level/Wall"]
+shape = SubResource( 1 )
+
+[node name="Wall_2" type="StaticBody2D" parent="Level"]
+position = Vector2( 1019.13, 300.26 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Level/Wall_2"]
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Level/Wall_2"]
+shape = SubResource( 1 )
+
+[node name="Roof" type="StaticBody2D" parent="Level"]
+position = Vector2( 511, 8 )
+scale = Vector2( 1.4, 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Level/Roof"]
+position = Vector2( 0.19807, -0.142853 )
+rotation = 1.5708
+scale = Vector2( 1.6, 1.1959 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Level/Roof"]
+shape = SubResource( 2 )
+
+[node name="Dead_Zone" type="Area2D" parent="Level"]
+position = Vector2( 502.091, 729.054 )
+scale = Vector2( 3, 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Level/Dead_Zone"]
+position = Vector2( 0.19807, -0.142853 )
+rotation = 1.5708
+scale = Vector2( 1.6, 1.1959 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Level/Dead_Zone"]
+shape = SubResource( 2 )
+
+[node name="Player" type="KinematicBody2D" parent="."]
+position = Vector2( 504, 568 )
+
+[node name="Sprite" type="Sprite" parent="Player"]
+texture = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource( 3 )
+
+[node name="Ball" type="KinematicBody2D" parent="."]
+position = Vector2( 360, 440 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Ball"]
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
+shape = SubResource( 4 )
+
+[node name="Trail" type="Line2D" parent="Ball"]
+z_index = -1
+points = PoolVector2Array( 0.257751, 1.20477 )
+default_color = Color( 0.4, 0.501961, 1, 1 )
+gradient = SubResource( 5 )
+script = ExtResource( 1 )
+targetPath = NodePath("..")
+trailLength = 10
+
+[node name="ball_bounce" type="AudioStreamPlayer2D" parent="Ball"]
+stream = ExtResource( 6 )
+
+[node name="UI" type="Control" parent="."]
+margin_right = 1024.0
+margin_bottom = 600.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="score_counter" type="Label" parent="UI"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -154.0
+margin_top = -327.0
+margin_right = 154.0
+margin_bottom = -80.0
+custom_fonts/font = SubResource( 8 )
+custom_colors/font_color = Color( 1, 1, 1, 0.392157 )
+text = "0"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="screen_dim" type="ColorRect" parent="UI"]
+pause_mode = 2
+margin_right = 1024.0
+margin_bottom = 600.0
+color = Color( 0, 0, 0, 0 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="game_over_screen" type="ColorRect" parent="UI"]
+pause_mode = 2
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -512.0
+margin_top = -300.0
+margin_right = 512.0
+margin_bottom = 300.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="UI/game_over_screen"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -232.0
+margin_top = 64.0
+margin_right = 232.0
+margin_bottom = 247.0
+custom_fonts/font = SubResource( 10 )
+text = "Test"
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="play_again" type="Button" parent="UI/game_over_screen"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -91.0
+margin_top = 81.0
+margin_right = 92.0
+margin_bottom = 122.0
+custom_fonts/font = SubResource( 12 )
+text = "Play Again"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="quit" type="Button" parent="UI/game_over_screen"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -91.0
+margin_top = 145.0
+margin_right = 92.0
+margin_bottom = 186.0
+custom_fonts/font = SubResource( 14 )
+text = "Quit"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 6 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+pause_mode = 2
+anims/screen_dim = SubResource( 15 )
+
+[connection signal="body_entered" from="Level/Dead_Zone" to="." method="_on_Dead_Zone_body_entered"]
+[connection signal="pressed" from="UI/game_over_screen/play_again" to="." method="_on_play_again_pressed"]
+[connection signal="pressed" from="UI/game_over_screen/quit" to="." method="_on_quit_pressed"]
